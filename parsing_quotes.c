@@ -6,7 +6,7 @@
 /*   By: melcuman <melcuman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 13:44:46 by sebasari          #+#    #+#             */
-/*   Updated: 2024/09/09 16:22:24 by melcuman         ###   ########.fr       */
+/*   Updated: 2024/09/09 19:02:55 by melcuman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,8 @@ t_quote	*add_q_to_nodes(int *index, char *input, t_quote *quotes)
 	quotes->nodes_q->content = malloc((ft_strlen(str) + 1) * sizeof(char));
 	ft_strlcpy(quotes->nodes_q->content, str, len + 1);
 	*index += len + 1;
-	// ft_lstprint(quotes);
+	printf("cafer 1\n");
+	ft_lstprint(quotes);
 	free(str);
 	return (quotes);
 }

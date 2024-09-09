@@ -6,7 +6,7 @@
 /*   By: melcuman <melcuman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 15:04:05 by sebasari          #+#    #+#             */
-/*   Updated: 2024/09/09 17:00:42 by melcuman         ###   ########.fr       */
+/*   Updated: 2024/09/09 19:20:28 by melcuman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,8 @@ void	ft_control_token(t_token *token)
 		}
 		tmp = tmp->next;
 	}
-	token = ft_free_undesired(token);
+	ft_command(token);
+	// token = ft_free_undesired(token);
 }
 
 int	parse_init(char *input)
@@ -82,21 +83,21 @@ t_token	*ft_tokenazition(char **str, t_token *token)
 	return (token);
 }
 
-t_token	*ft_free_undesired(t_token *token)
+
+
+// özel karakterler de sıkıntı var 
+/*t_token	*ft_free_undesired(t_token *token)
 {
 	t_list	*tmp;
 	t_list	*tmp_pre;
 	char	*str;
-	/*
 		Check if token or token->nodes_t is null
-	*/
 	if (!token && token->nodes_t)
 		return token;
 	tmp = token->nodes_t;
 	str = (char *)tmp->content;
-	/*
 		Check if the first node matches undesired conditions
-	*/
+	
 	if (str && (ft_is_quotes_there_index(str[0]) || ft_special_type(str, 0)))
 	{
 		token->nodes_t = tmp->next;
@@ -104,17 +105,14 @@ t_token	*ft_free_undesired(t_token *token)
 		ft_lstprint_t(token);
 		return (token);
 	}
-	/*
 		Initialize pointers to traverse the list
-	*/
 	tmp_pre = tmp;
 	tmp = tmp_pre->next;
 	str = (char *)tmp->content;
 	while (tmp != NULL)
 	{
-		/*
+
 			If we find undesired token, remove it
-		*/
 		if (str && (ft_is_quotes_there_index(str[0]) || ft_special_type(str, 0)))
 		{
 			tmp_pre->next = tmp->next;
@@ -125,4 +123,4 @@ t_token	*ft_free_undesired(t_token *token)
 		tmp = tmp->next;
 	}
 	return (token);
-}
+}*/

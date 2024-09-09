@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sebasari <sebasari@student.42.fr>          +#+  +:+       +#+        */
+/*   By: melcuman <melcuman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/19 15:07:13 by sebasari          #+#    #+#             */
-/*   Updated: 2024/09/05 16:13:22 by sebasari         ###   ########.fr       */
+/*   Updated: 2024/09/09 19:46:52 by melcuman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,6 @@ t_special	*ft_get_pipe(t_special *special, char *input, int i);
 t_special	*ft_get_redi_herodoc(t_special *special);
 t_special	*ft_get_redi_append(t_special *special);
 
-t_white		*ft_regular(int *index, char *input, t_white *white);
-
+void		ft_execve(t_list *token);
+void		ft_command(t_token *token);
 #endif
