@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: melcuman <melcuman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: murathanelcuman <murathanelcuman@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/19 15:07:13 by sebasari          #+#    #+#             */
-/*   Updated: 2024/09/09 19:46:52 by melcuman         ###   ########.fr       */
+/*   Updated: 2024/09/10 17:46:59 by murathanelc      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 #include <stdlib.h>
 #include <readline/readline.h>
 #include <readline/history.h>
+#include <string.h>
 
 typedef struct s_white
 {
@@ -81,4 +82,6 @@ t_special	*ft_get_redi_append(t_special *special);
 
 void		ft_execve(t_list *token);
 void		ft_command(t_token *token);
+void	ft_execute_command(t_token *token);
+char	*ft_find_command_path(char *command);
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_token.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: melcuman <melcuman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: murathanelcuman <murathanelcuman@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 15:04:05 by sebasari          #+#    #+#             */
-/*   Updated: 2024/09/09 19:20:28 by melcuman         ###   ########.fr       */
+/*   Updated: 2024/09/10 17:47:47 by murathanelc      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	ft_control_token(t_token *token)
 		}
 		tmp = tmp->next;
 	}
-	ft_command(token);
+	// ft_command(token);
 	// token = ft_free_undesired(token);
 }
 
@@ -59,7 +59,9 @@ int	parse_init(char *input)
 	token->nodes_t->next = NULL;
 	input = ft_strtrim(input, " ");
 	str = ft_split(input, ' ');
-	token = ft_tokenazition(str, token);
+	token = ft_tokenazition(str, token); // Tokenazition I guess
+	// execute command
+	ft_execute_command(token);
 	ft_split_free(str);
 	ft_lstprint_t(token);
 	ft_control_token(token);
