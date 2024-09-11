@@ -1,39 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_env.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: murathanelcuman <murathanelcuman@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/04 12:27:07 by sebasari          #+#    #+#             */
-/*   Updated: 2024/09/11 23:27:31 by murathanelc      ###   ########.fr       */
+/*   Created: 2024/09/11 21:30:15 by murathanelc       #+#    #+#             */
+/*   Updated: 2024/09/11 23:18:24 by murathanelc      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/*
-	char **envp:
-		environment variables used for information about the user's home directory,
-		terminal type, current locale, and ...
-*/
-
-int main(int argc, char **argv, char **envp)
+void	ft_env(char **envp)
 {
-	(void)argc;
-	(void)argv;
-	char	*input;
+	int	i;
 
-	if (envp == NULL)
+	i = 0;
+	while (envp[i] != NULL)
 	{
-		printf("Envp are null\n");
-		return (1);
+		printf("%s\n", envp[i]);
+		i++;
 	}
-	while (1) 
-	{
-		input = readline("minishell$ ");
-		parse_init(input, envp); // parsing input
-		add_history(input); // add history
-	}
-	return 0;
 }

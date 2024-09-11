@@ -6,7 +6,7 @@
 /*   By: murathanelcuman <murathanelcuman@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 16:47:24 by murathanelc       #+#    #+#             */
-/*   Updated: 2024/09/10 21:41:02 by murathanelc      ###   ########.fr       */
+/*   Updated: 2024/09/11 23:12:45 by murathanelc      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ char	*ft_find_command_path(char *command)
 	return (NULL);
 }
 
-void	ft_execute_command(t_token *token)
+void	ft_execute_commands(t_token *token)
 {
 	char	**argv;
 	char	*command_path;
@@ -51,9 +51,9 @@ void	ft_execute_command(t_token *token)
 	t_list	*temp;
 	
 	temp = token->nodes_t;
-	if (token == NULL || (char *)temp->content == NULL)
-		return ;
 	str = (char *)temp->content;
+	if (token == NULL || str == NULL)
+		return ;
 	command_path = ft_find_command_path(str);
 	if (command_path == NULL)
 	{
@@ -92,4 +92,19 @@ void	ft_execute_command(t_token *token)
 	else
 		wait(NULL); // Parent waits the child
 	free(argv);
+}
+
+void	ft_command(t_token *token, char **envp)
+{
+	t_list	*temp;
+	char	*str;
+
+	temp = token->nodes_t;
+	str = (char *)temp->content;
+	if (temp == NULL || str == NULL)
+		return ;
+	if (ft_strncmp(str, "ls", ft_strlen(str)) == 0)
+		ft_execute_commands(token);
+	else
+		ft_builtin_commands(token, envp);
 }

@@ -6,7 +6,7 @@
 /*   By: murathanelcuman <murathanelcuman@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/19 15:07:13 by sebasari          #+#    #+#             */
-/*   Updated: 2024/09/10 17:46:59 by murathanelc      ###   ########.fr       */
+/*   Updated: 2024/09/11 23:18:18 by murathanelc      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 #include <string.h>
+#include <stdbool.h>
 
 typedef struct s_white
 {
@@ -57,7 +58,7 @@ int			ft_even_odd(char *str, char c);
 t_quote		*add_q_to_nodes(int *index, char *input, t_quote *quotes);
 int			ft_find_next_q(int start, char *input);
 
-int			parse_init(char *input);
+int			parse_init(char *input, char **envp);
 t_token		*ft_tokenazition(char **str, t_token *token);
 void		ft_control_token(t_token *token);
 t_token		*ft_free_undesired(t_token *token);
@@ -81,7 +82,17 @@ t_special	*ft_get_redi_herodoc(t_special *special);
 t_special	*ft_get_redi_append(t_special *special);
 
 void		ft_execve(t_list *token);
-void		ft_command(t_token *token);
-void	ft_execute_command(t_token *token);
-char	*ft_find_command_path(char *command);
+void		ft_command(t_token *token, char **envp);
+void		ft_execute_commands(t_token *token);
+char		*ft_find_command_path(char *command);
+
+// builtins
+void	ft_builtin_commands(t_token *token, char **envp);
+void	ft_pwd(char *str);
+void	ft_echo(t_token *token);
+void	ft_exit(t_token *token);
+char	**ft_get_char(t_token *token);
+void	ft_cd(t_token *token);
+void	ft_env(char **envp);
+
 #endif
