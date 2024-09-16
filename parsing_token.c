@@ -6,7 +6,7 @@
 /*   By: murathanelcuman <murathanelcuman@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 15:04:05 by sebasari          #+#    #+#             */
-/*   Updated: 2024/09/11 23:12:28 by murathanelc      ###   ########.fr       */
+/*   Updated: 2024/09/15 23:34:48 by murathanelc      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	ft_control_token(t_token *token)
 	// token = ft_free_undesired(token);
 }
 
-int	parse_init(char *input, char **envp)
+int	parse_init(char *input, char **envp, t_minishell *minishell)
 {
 	char		**str;
 	t_token		*token;
@@ -61,7 +61,7 @@ int	parse_init(char *input, char **envp)
 	str = ft_split(input, ' ');
 	token = ft_tokenazition(str, token); // Tokenazition I guess
 	// execute command
-	ft_command(token, envp);
+	ft_command(token, envp, minishell);
 	ft_split_free(str);
 	ft_lstprint_t(token);
 	ft_control_token(token);

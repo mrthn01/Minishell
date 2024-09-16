@@ -13,7 +13,9 @@ SRC = 	main.c \
 	 	ft_builtins1.c \
 		ft_echo.c \
 		ft_cd.c \
-		ft_env.c
+		ft_env.c \
+		ft_export.c \
+		ft_unset.c
 
 OBJS = $(SRC:.c=.o)
 CC = gcc

@@ -6,7 +6,7 @@
 /*   By: murathanelcuman <murathanelcuman@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 17:34:55 by murathanelc       #+#    #+#             */
-/*   Updated: 2024/09/11 21:06:46 by murathanelc      ###   ########.fr       */
+/*   Updated: 2024/09/15 23:59:20 by murathanelc      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ static int	ft_echo_flag(t_token *token)
 	return (0);
 }
 
+// return entered values as array list
 char	**ft_get_char(t_token *token)
 {
 	char	**argv;

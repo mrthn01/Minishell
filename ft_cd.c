@@ -6,7 +6,7 @@
 /*   By: murathanelcuman <murathanelcuman@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 19:57:07 by murathanelc       #+#    #+#             */
-/*   Updated: 2024/09/11 21:23:43 by murathanelc      ###   ########.fr       */
+/*   Updated: 2024/09/16 15:49:43 by murathanelc      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 	Eğer cd yazarsam beni direk home'a yönlendiriyor
 */
 
+// cd command
 void	ft_cd(t_token *token)
 {
 	char	**argv;
