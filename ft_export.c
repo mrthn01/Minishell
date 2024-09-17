@@ -6,7 +6,7 @@
 /*   By: murathanelcuman <murathanelcuman@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/15 19:18:01 by murathanelc       #+#    #+#             */
-/*   Updated: 2024/09/16 15:41:52 by murathanelc      ###   ########.fr       */
+/*   Updated: 2024/09/17 18:29:42 by murathanelc      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ void	ft_add_new_env(char *argv, t_minishell *minishell, char **envp)
 	int		i;
 
 	i = 0;
-	new_env = ft_calloc(sizeof(char *), ft_number_of_envp_var(envp) + 1);
+	new_env = ft_calloc(sizeof(char *), ft_number_of_envp_var(envp) + 2);
 	if (!new_env)
 		return ;
 	while (minishell->env[i])
