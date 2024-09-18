@@ -6,13 +6,13 @@
 /*   By: murathanelcuman <murathanelcuman@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 12:27:59 by murathanelc       #+#    #+#             */
-/*   Updated: 2024/09/18 16:34:10 by murathanelc      ###   ########.fr       */
+/*   Updated: 2024/09/18 16:47:45 by murathanelc      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_builtin_commands(t_token *token, char **envp)
+void	ft_builtin_commands(t_token *token)
 {
 	char	*str;
 	char	**input;
@@ -30,7 +30,7 @@ void	ft_builtin_commands(t_token *token, char **envp)
 	else if (ft_strncmp(str, "export", ft_strlen("export")) == 0)
 		ft_export(input);
 	else if (ft_strncmp(str, "unset", ft_strlen("unset")) == 0)
-		ft_unset(token, envp);
+		ft_unset(input);
 	else if (ft_strncmp(str, "exit", ft_strlen(str)) == 0)
 		ft_exit(token);
 }

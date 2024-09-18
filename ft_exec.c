@@ -6,7 +6,7 @@
 /*   By: murathanelcuman <murathanelcuman@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 16:47:24 by murathanelc       #+#    #+#             */
-/*   Updated: 2024/09/18 15:33:20 by murathanelc      ###   ########.fr       */
+/*   Updated: 2024/09/18 16:48:59 by murathanelc      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ void	ft_execute_commands(t_token *token)
 	free(argv);
 }
 
-void	ft_command(t_token *token, char **envp)
+void	ft_command(t_token *token)
 {
 	t_list	*temp;
 	char	*str;
@@ -106,5 +106,5 @@ void	ft_command(t_token *token, char **envp)
 	if (ft_strncmp(str, "ls", ft_strlen(str)) == 0)
 		ft_execute_commands(token);
 	else
-		ft_builtin_commands(token, envp);
+		ft_builtin_commands(token);
 }

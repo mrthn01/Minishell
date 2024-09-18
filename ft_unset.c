@@ -6,61 +6,46 @@
 /*   By: murathanelcuman <murathanelcuman@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/13 17:27:28 by murathanelc       #+#    #+#             */
-/*   Updated: 2024/09/13 18:04:13 by murathanelc      ###   ########.fr       */
+/*   Updated: 2024/09/18 16:51:08 by murathanelc      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// Total number of environment variables
-int	number_of_environment_arguments(char **envp)
-{
-	int	i;
-
-	i = 0;
-	while (*envp)
-	{
-		i++;
-		envp++;
-	}
-	return (i);
-}
-
 // unset (removing environment elements)
-void	unset(char *str, char **envp)
+void	ft_remove_var(char *str)
 {
-	char	**env;
+	char	**updated_env;
 	int		i;
+	int		j;
 
 	i = 0;
-	env = malloc(sizeof(char *) * (number_of_environment_arguments(envp)) + 1);
-	if (!env)
-		return ;
-	while (*envp)
+	j = 0;
+	updated_env = ft_calloc(sizeof(char *), ft_number_of_envp_var() + 1);
+	while (g_minishell.env[i])
 	{
-		if (ft_strncmp(*envp, str, ft_strlen(str)))
+		if (ft_strncmp(g_minishell.env[i], str, ft_strlen(str)))
 		{
-			env[i] = ft_strdup(*envp);
-			i++;
+			updated_env[j] = ft_strdup(g_minishell.env[i]);
+			j++;
 		}
-		envp++;
+		i++;
 	}
-	env[i] = 0;
-	envp = env;
+	updated_env[j] = NULL;
+	ft_free_array(g_minishell.env);
+	g_minishell.env = updated_env;
 }
 
-void	ft_unset(t_token *token, char **envp)
+void	ft_unset(char **input)
 {
-	char	**argv;
 	char	*str;
 
-	argv = ft_get_char(token);
-	argv++; // It is incremented because argv[0] == unset
-	while (*argv)
+	input++;
+	while (*input)
 	{
-		str = ft_strjoin(*argv, "=");
-		unset(str, envp);
+		str = ft_strjoin(*input, "=");
+		ft_remove_var(str);
 		free(str);
-		argv++;
+		input++;
 	}
 }

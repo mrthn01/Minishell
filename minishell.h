@@ -6,7 +6,7 @@
 /*   By: murathanelcuman <murathanelcuman@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/19 15:07:13 by sebasari          #+#    #+#             */
-/*   Updated: 2024/09/18 16:35:55 by murathanelc      ###   ########.fr       */
+/*   Updated: 2024/09/18 16:49:38 by murathanelc      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ int			ft_get_size_double_point(char **str);
 void		ft_split_free(char **str);
 void		del(void *content);
 int			ft_strlen_adjusted(char **str);
-void		ft_count_environment(char **envp);
+
 int			ft_updated_strchr(char *str, int c);
 
 int			ft_special_type(char *input, int i);
@@ -97,12 +97,12 @@ t_special	*ft_get_redi_herodoc(t_special *special);
 t_special	*ft_get_redi_append(t_special *special);
 
 void		ft_execve(t_list *token);
-void		ft_command(t_token *token, char **envp);
+void		ft_command(t_token *token);
 void		ft_execute_commands(t_token *token);
 char		*ft_find_command_path(char *command);
 
 // builtins
-void		ft_builtin_commands(t_token *token, char **envp);
+void		ft_builtin_commands(t_token *token);
 void		ft_pwd(char *str);
 void		ft_echo(t_token *token);
 void		ft_exit(t_token *token);
@@ -110,7 +110,7 @@ char		**ft_get_char(t_token *token);
 void		ft_cd(t_token *token);
 void		ft_env(char **input);
 void		ft_export(char **input);
-void		ft_unset(t_token *token, char **envp);
+void		ft_unset(char **input);
 
 // export utils
 
