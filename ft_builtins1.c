@@ -6,7 +6,7 @@
 /*   By: murathanelcuman <murathanelcuman@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 12:27:59 by murathanelc       #+#    #+#             */
-/*   Updated: 2024/09/18 15:34:01 by murathanelc      ###   ########.fr       */
+/*   Updated: 2024/09/18 16:34:10 by murathanelc      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	ft_builtin_commands(t_token *token, char **envp)
 	else if (ft_strncmp(str, "cd", ft_strlen("cd")) == 0)
 		ft_cd(token);
 	else if (ft_strncmp(str, "env", ft_strlen("env")) == 0)
-		ft_env(envp);
+		ft_env(input);
 	else if (ft_strncmp(str, "export", ft_strlen("export")) == 0)
 		ft_export(input);
 	else if (ft_strncmp(str, "unset", ft_strlen("unset")) == 0)

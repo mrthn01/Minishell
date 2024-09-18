@@ -6,7 +6,7 @@
 /*   By: murathanelcuman <murathanelcuman@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/19 15:07:13 by sebasari          #+#    #+#             */
-/*   Updated: 2024/09/18 15:56:27 by murathanelc      ###   ########.fr       */
+/*   Updated: 2024/09/18 16:35:55 by murathanelc      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ void		ft_echo(t_token *token);
 void		ft_exit(t_token *token);
 char		**ft_get_char(t_token *token);
 void		ft_cd(t_token *token);
-void		ft_env(char **envp);
+void		ft_env(char **input);
 void		ft_export(char **input);
 void		ft_unset(t_token *token, char **envp);
 
