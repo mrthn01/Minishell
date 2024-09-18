@@ -6,16 +6,18 @@
 /*   By: murathanelcuman <murathanelcuman@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 12:27:59 by murathanelc       #+#    #+#             */
-/*   Updated: 2024/09/15 23:35:21 by murathanelc      ###   ########.fr       */
+/*   Updated: 2024/09/18 15:34:01 by murathanelc      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_builtin_commands(t_token *token, char **envp, t_minishell *minishell)
+void	ft_builtin_commands(t_token *token, char **envp)
 {
 	char	*str;
+	char	**input;
 
+	input = ft_get_char(token);
 	str = (char *)token->nodes_t->content;
 	if (ft_strncmp(str, "pwd", ft_strlen(str)) == 0)
 		ft_pwd(str);
@@ -26,7 +28,7 @@ void	ft_builtin_commands(t_token *token, char **envp, t_minishell *minishell)
 	else if (ft_strncmp(str, "env", ft_strlen("env")) == 0)
 		ft_env(envp);
 	else if (ft_strncmp(str, "export", ft_strlen("export")) == 0)
-		ft_export(token, &envp, minishell);
+		ft_export(input);
 	else if (ft_strncmp(str, "unset", ft_strlen("unset")) == 0)
 		ft_unset(token, envp);
 	else if (ft_strncmp(str, "exit", ft_strlen(str)) == 0)

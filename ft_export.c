@@ -6,20 +6,97 @@
 /*   By: murathanelcuman <murathanelcuman@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/15 19:18:01 by murathanelc       #+#    #+#             */
-/*   Updated: 2024/09/17 18:29:42 by murathanelc      ###   ########.fr       */
+/*   Updated: 2024/09/18 15:55:51 by murathanelc      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ft_control_envp_var(char *argv)
+extern t_minishell	g_minishell;
+
+// control env var
+int	ft_check_envp_var(char *str)
 {
-	if (ft_isdigit(*argv))
+	if (ft_isdigit(*str))
+	{
+		printf("error: export bad syntax\n");
 		return (0);
+	}
 	return (1);
 }
 
-// free arrays
+// check equal sign
+int	ft_check_equal_sign(char *str)
+{
+	int	i;
+
+	i = 0;
+	if (str[0] == '=' || ft_isdigit(str[0]))
+	{
+		printf("error: export bad syntax\n");
+		return (0);
+	}
+	while (str[i] && str[i] != '=')
+	{
+		if (ft_isalnum(str[i]) == 0)
+		{
+			printf("error: export bad syntax\n");
+			return (0);
+		}
+		i++;
+	}
+	if (ft_updated_strchr(&str[i], '=') == 1)
+		return (1);
+	return (0);
+}
+
+// print env var
+void	ft_display_env(void)
+{
+	int	i;
+
+	i = 0;
+	while (g_minishell.env[i])
+	{
+		printf("describe -x %s\n", g_minishell.env[i]);
+		i++;
+	}
+}
+
+// check env var in env var array. If it is exist return it is index, else return -1
+int	ft_is_exist(char *str)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	while (g_minishell.env[i])
+	{
+		j = 0;
+		while (g_minishell.env[i][j] && str[j])
+		{
+			if (str[j] == '=' && g_minishell.env[i][j] == '=')
+				return (i);
+			if (str[j] != g_minishell.env[i][j])
+				break;
+			j++;
+		}
+		i++;
+	}
+	return (-1);
+}
+
+// number of env var
+int	ft_number_of_envp_var(void)
+{
+	int	i;
+
+	i = 0;
+	while (g_minishell.env[i])
+		i++;
+	return (i);
+}
+
 void	ft_free_array(char **str)
 {
 	int	i;
@@ -33,137 +110,50 @@ void	ft_free_array(char **str)
 	free(str);
 }
 
-// check the equality sign on entered command
-int	ft_check_equal_sign(char *argv)
+// add new env variable to env array
+void	ft_add_new_env(char *str)
 {
-	int	i;
-
-	i = 0;
-	if (argv[0] == '=' || ft_isdigit(argv[0]))
-		return (0);
-	while (argv[i] && argv[i] != '=')
-	{
-		if (ft_isalnum(argv[i]) == 0)
-			return (0);
-		i++;
-	}
-	if (ft_updated_strchr(&argv[i], '=') == 1)
-		return (1);
-	return (0);
-}
-
-// check environmental exists. If it exists return index of environmental value, else return -1
-int	ft_exists(char *argv, t_minishell *minishell)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	while (minishell->env[i])
-	{
-		j = 0;
-		while (minishell->env[i][j] && argv[j])
-		{
-			if (argv[j] == '=' && minishell->env[i][j] == '=')
-				return (i);
-			if (argv[j] != minishell->env[i][j])
-				break;
-			j++;
-		}
-		i++;
-	}
-	return (-1);
-}
-
-// return number of environment variables
-int	ft_number_of_envp_var(char **envp)
-{
-	int	i;
-
-	i = 0;
-	while (*envp)
-	{
-		i++;
-		envp++;
-	}
-	return (i);
-}
-
-// Display exported variables 
-void	ft_display(char **envp)
-{
-	char	**temp;
-
-	temp = envp;
-	while (*temp)
-	{
-		printf("describe -x %s\n", *temp);
-		temp++;
-	}
-}
-
-// add new environment variable
-void	ft_add_new_env(char *argv, t_minishell *minishell, char **envp)
-{
-	char	**new_env;
+	char	**new_var;
 	int		i;
 
 	i = 0;
-	new_env = ft_calloc(sizeof(char *), ft_number_of_envp_var(envp) + 2);
-	if (!new_env)
+	new_var = ft_calloc(sizeof(char *), ft_number_of_envp_var() + 2);
+	if (!new_var)
 		return ;
-	while (minishell->env[i])
+	while (g_minishell.env[i])
 	{
-		new_env[i] = ft_strdup(minishell->env[i]);
+		new_var[i] = ft_strdup(g_minishell.env[i]);
 		i++;
 	}
-	new_env[i] = ft_strdup(argv);
-	ft_free_array(minishell->env);
-	minishell->env = new_env;
-}
-
-// Update existing environment variable
-void	ft_update_env(char *argv, t_minishell *minishell)
-{
-	int	location;
-
-	location = ft_exists(argv, minishell);
-	free(minishell->env[location]);
-	minishell->env[location] = ft_strdup(argv);
+	new_var[i] = ft_strdup(str);
+	ft_free_array(g_minishell.env);
+	g_minishell.env = new_var;
 }
 
 // export command
-void	ft_export(t_token *token, char ***envp, t_minishell *minishell)
+void	ft_export(char **input)
 {
-	char	**argv;
-	int		argc;
-	
-	argv = ft_get_char(token);
-	argc = ft_strlen_adjusted(argv);
-	if (argc == 1)
+	int	location;
+
+	if (input[1] == NULL)
 	{
-		ft_display(minishell->env);
+		ft_display_env();
 		return ;
 	}
-	while (*++argv)
+	while (*++input)
 	{
-		printf("argv: %s\n", *argv);
-		if (ft_check_equal_sign(*argv) == 0)
+		if (ft_check_equal_sign(*input) == 0)
 			continue ;
-		printf("argv next: %s\n", *argv);
-		if (*argv && ft_control_envp_var(*argv))
+		if (*input && ft_check_envp_var(*input))
 		{
-			printf("It is working\n");
-			if (ft_exists(*argv, minishell) != -1)
+			if (ft_is_exist(*input) != -1)
 			{
-				ft_update_env(*argv, minishell);
-				printf("Updating is worked\n");
+				location = ft_is_exist(*input);
+				free(g_minishell.env[location]);
+				g_minishell.env[location] = ft_strdup(*input);
 			}
 			else
-			{
-				ft_add_new_env(*argv, minishell, *envp);
-				printf("Adding new environment variable is worked\n");
-			}
+				ft_add_new_env(*input);
 		}
 	}
 }

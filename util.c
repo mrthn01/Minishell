@@ -6,7 +6,7 @@
 /*   By: murathanelcuman <murathanelcuman@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 15:08:44 by sebasari          #+#    #+#             */
-/*   Updated: 2024/09/16 15:38:36 by murathanelc      ###   ########.fr       */
+/*   Updated: 2024/09/18 15:50:12 by murathanelc      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,19 +130,6 @@ int	ft_strlen_adjusted(char **str)
 void del(void *content)
 {
 	free(content);
-}
-
-// this will work when only export command is entered. (just like env)
-void	ft_count_environment(char **envp)
-{
-	char	**temp;
-
-	temp = envp;
-	while (*temp)
-	{
-		printf("%s\n", *temp);
-		temp++;
-	}
 }
 
 int	ft_updated_strchr(char *str, int c)
