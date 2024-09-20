@@ -1,21 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstadd_front_bonus.c                            :+:      :+:    :+:   */
+/*   ft_pwd.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sebasari <sebasari@student.42.fr>          +#+  +:+       +#+        */
+/*   By: murathanelcuman <murathanelcuman@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/18 13:18:47 by sebasari          #+#    #+#             */
-/*   Updated: 2024/09/17 11:12:45 by sebasari         ###   ########.fr       */
+/*   Created: 2024/09/19 19:00:24 by murathanelc       #+#    #+#             */
+/*   Updated: 2024/09/19 19:00:55 by murathanelc      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "minishell.h"
 
-void	ft_lstadd_front(t_list **lst, t_list *new)
+// pwd command
+void	ft_pwd(char *str)
 {
-	if (!lst || !new)
+	char	*pwd;
+	
+	if (ft_strncmp(str, "pwd", ft_strlen(str)) == 0)
+	{
+		pwd = getcwd(NULL, 0);
+		if (pwd != NULL)
+		{
+			printf("%s\n", pwd);
+			free(pwd);
+		}
+		else
+			perror("pwd error");
+	}
+	else
 		return ;
-	new -> next = *lst;
-	*lst = new;
 }

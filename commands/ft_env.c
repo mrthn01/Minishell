@@ -1,21 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstadd_front_bonus.c                            :+:      :+:    :+:   */
+/*   ft_env.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sebasari <sebasari@student.42.fr>          +#+  +:+       +#+        */
+/*   By: murathanelcuman <murathanelcuman@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/18 13:18:47 by sebasari          #+#    #+#             */
-/*   Updated: 2024/09/17 11:12:45 by sebasari         ###   ########.fr       */
+/*   Created: 2024/09/19 22:56:38 by murathanelc       #+#    #+#             */
+/*   Updated: 2024/09/19 23:05:33 by murathanelc      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "minishell.h"
 
-void	ft_lstadd_front(t_list **lst, t_list *new)
+void	ft_env(char	**input)
 {
-	if (!lst || !new)
+	char	**envp;
+
+	envp = g_state.envp;
+	if (input[1])
+	{
+		printf("error: No such file or directory.\n");
 		return ;
-	new -> next = *lst;
-	*lst = new;
+	}
+	while (*envp)
+	{
+		printf("%s\n", *envp);
+		envp++;
+	}
 }

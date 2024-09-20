@@ -1,21 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstadd_front_bonus.c                            :+:      :+:    :+:   */
+/*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sebasari <sebasari@student.42.fr>          +#+  +:+       +#+        */
+/*   By: murathanelcuman <murathanelcuman@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/18 13:18:47 by sebasari          #+#    #+#             */
-/*   Updated: 2024/09/17 11:12:45 by sebasari         ###   ########.fr       */
+/*   Created: 2024/09/19 22:57:32 by murathanelc       #+#    #+#             */
+/*   Updated: 2024/09/19 23:26:58 by murathanelc      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "minishell.h"
 
-void	ft_lstadd_front(t_list **lst, t_list *new)
+// exit command
+void	ft_exit(t_minishell *mini)
 {
-	if (!lst || !new)
-		return ;
-	new -> next = *lst;
-	*lst = new;
+	t_list	*temp;
+	int		total_len;
+	
+	temp = mini->nodes_t;
+	total_len = ft_lstsize(temp);
+	if (total_len <= 3)
+		exit(EXIT_SUCCESS);
+	else
+		printf("exit: too many arguments\n");
 }

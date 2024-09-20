@@ -1,18 +1,6 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   ft_export.c                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: murathanelcuman <murathanelcuman@studen    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/15 19:18:01 by murathanelc       #+#    #+#             */
-/*   Updated: 2024/09/18 15:55:51 by murathanelc      ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "minishell.h"
 
-extern t_minishell	g_minishell;
+extern t_state	g_state;
 
 // control env var
 int	ft_check_envp_var(char *str)
@@ -56,9 +44,9 @@ void	ft_display_env(void)
 	int	i;
 
 	i = 0;
-	while (g_minishell.env[i])
+	while (g_state.envp[i])
 	{
-		printf("describe -x %s\n", g_minishell.env[i]);
+		printf("describe -x %s\n", g_state.envp[i]);
 		i++;
 	}
 }
@@ -70,14 +58,14 @@ int	ft_is_exist(char *str)
 	int	j;
 
 	i = 0;
-	while (g_minishell.env[i])
+	while (g_state.envp[i])
 	{
 		j = 0;
-		while (g_minishell.env[i][j] && str[j])
+		while (g_state.envp[i][j] && str[j])
 		{
-			if (str[j] == '=' && g_minishell.env[i][j] == '=')
+			if (str[j] == '=' && g_state.envp[i][j] == '=')
 				return (i);
-			if (str[j] != g_minishell.env[i][j])
+			if (str[j] != g_state.envp[i][j])
 				break;
 			j++;
 		}
@@ -92,7 +80,7 @@ int	ft_number_of_envp_var(void)
 	int	i;
 
 	i = 0;
-	while (g_minishell.env[i])
+	while (g_state.envp[i])
 		i++;
 	return (i);
 }
@@ -120,14 +108,14 @@ void	ft_add_new_env(char *str)
 	new_var = ft_calloc(sizeof(char *), ft_number_of_envp_var() + 2);
 	if (!new_var)
 		return ;
-	while (g_minishell.env[i])
+	while (g_state.envp[i])
 	{
-		new_var[i] = ft_strdup(g_minishell.env[i]);
+		new_var[i] = ft_strdup(g_state.envp[i]);
 		i++;
 	}
 	new_var[i] = ft_strdup(str);
-	ft_free_array(g_minishell.env);
-	g_minishell.env = new_var;
+	ft_free_array(g_state.envp);
+	g_state.envp = new_var;
 }
 
 // export command
@@ -149,8 +137,8 @@ void	ft_export(char **input)
 			if (ft_is_exist(*input) != -1)
 			{
 				location = ft_is_exist(*input);
-				free(g_minishell.env[location]);
-				g_minishell.env[location] = ft_strdup(*input);
+				free(g_state.envp[location]);
+				g_state.envp[location] = ft_strdup(*input);
 			}
 			else
 				ft_add_new_env(*input);

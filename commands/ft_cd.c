@@ -5,31 +5,21 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: murathanelcuman <murathanelcuman@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/11 19:57:07 by murathanelc       #+#    #+#             */
-/*   Updated: 2024/09/16 15:49:43 by murathanelc      ###   ########.fr       */
+/*   Created: 2024/09/19 19:01:06 by murathanelc       #+#    #+#             */
+/*   Updated: 2024/09/19 21:01:07 by murathanelc      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/*
-	chdir function is used
-	it changes the current working directory to path
-*/
-
-/*
-	directory = getenv("HOME");
-	Eğer cd yazarsam beni direk home'a yönlendiriyor
-*/
-
 // cd command
-void	ft_cd(t_token *token)
+void	ft_cd(t_minishell *mini)
 {
 	char	**argv;
 	char	*directory;
 	int		total_len;
 	
-	argv = ft_get_char(token);
+	argv = ft_get_char(mini);
 	total_len = ft_strlen_adjusted(argv);
 	if (total_len < 2)
 		directory = getenv("HOME");
