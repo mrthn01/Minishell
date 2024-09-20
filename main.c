@@ -6,12 +6,13 @@
 /*   By: murathanelcuman <murathanelcuman@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 12:27:07 by sebasari          #+#    #+#             */
-/*   Updated: 2024/09/20 15:02:25 by murathanelc      ###   ########.fr       */
+/*   Updated: 2024/09/19 23:07:45 by murathanelc      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+// global değişken
 t_state	g_state;
 
 int	check_if_empty(char *str)
@@ -28,12 +29,13 @@ int	check_if_empty(char *str)
 	return (1);
 }
 
-int main(int argc, char **argv)
+int main(int argc, char **argv, char **envp)
 {
 	char	*input;
 
 	(void)argc;
 	(void)argv;
+	ft_init(envp);
 	while (1) 
 	{
 		input = readline("minishell$ ");

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_quotes.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sebasari <sebasari@student.42.fr>          +#+  +:+       +#+        */
+/*   By: murathanelcuman <murathanelcuman@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 13:44:46 by sebasari          #+#    #+#             */
-/*   Updated: 2024/09/18 11:12:27 by sebasari         ###   ########.fr       */
+/*   Updated: 2024/09/19 19:02:54 by murathanelc      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

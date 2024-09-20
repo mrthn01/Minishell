@@ -6,7 +6,7 @@
 /*   By: murathanelcuman <murathanelcuman@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/19 15:07:13 by sebasari          #+#    #+#             */
-/*   Updated: 2024/09/20 14:58:03 by murathanelc      ###   ########.fr       */
+/*   Updated: 2024/09/20 00:18:06 by murathanelc      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ typedef struct	s_parse
 	struct s_parse	*next;
 	t_file			*file;
 }					t_parse;
-
 
 typedef struct	s_minishell
 {
