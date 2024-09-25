@@ -6,7 +6,7 @@
 /*   By: murathanelcuman <murathanelcuman@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 23:20:49 by murathanelc       #+#    #+#             */
-/*   Updated: 2024/09/20 12:23:08 by murathanelc      ###   ########.fr       */
+/*   Updated: 2024/09/25 13:29:05 by murathanelc      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,95 +70,167 @@ char	*ft_find_command_path(char *command)
 	return (NULL);
 }
 
-void	ft_execute_commands(t_minishell *mini)
-{
-	char	**argv;
-	char	*command_path;
-	char	*str;
-	int		argc;
-	pid_t	pid;
-	int		i;
-	t_list	*temp;
+// void	ft_execute_execve(char *str)
+// {
+// 	char	**argv;
+// 	char	*command_path;
+// 	char	*str;
+// 	int		argc;
+// 	int		i;
+// 	t_list	*temp;
 	
-	temp = mini->nodes_t;
-	str = (char *)temp->content;
-	if (mini == NULL || str == NULL)
+// 	temp = mini->nodes_t;
+// 	str = (char *)temp->content;
+// 	if (mini == NULL || str == NULL)
+// 		return ;
+// 	command_path = ft_find_command_path(str);
+// 	if (command_path == NULL)
+// 	{
+// 		printf("%s: command not found\n", str);
+// 		return ;
+// 	}
+// 	argc = 0;
+// 	while (temp)
+// 	{
+// 		argc++;
+// 		temp = temp->next;
+// 	}
+// 	argv = malloc((argc + 1) *  sizeof(char *));
+// 	i = 0;
+// 	temp = mini->nodes_t;
+// 	while (i < argc && temp != NULL)
+// 	{
+// 		argv[i] = (char *)temp->content;
+// 		temp = temp->next;
+// 		i++;
+// 	}
+// 	argv[argc] = NULL; // last char shoudl be null
+// 	if (execve(command_path, argv, NULL) == -1)
+// 	{
+// 		perror("execve failed");
+// 		exit(EXIT_FAILURE);
+// 	}
+// 	free(argv);
+// }
+
+// void	ft_builtin_commands(t_minishell *mini)
+// {
+// 	char	**input;
+
+// 	input = ft_get_char(mini);
+// 	if (ft_strncmp(input[0], "pwd", ft_strlen(str)) == 0)
+// 		ft_pwd(*input);
+// 	else if (ft_strncmp(input[0], "echo", ft_strlen(str)) == 0)
+// 		ft_echo(input);
+// 	else if (ft_strncmp(input[0], "cd", ft_strlen("cd")) == 0)
+// 		ft_cd(input);
+// 	else if (ft_strncmp(input[0], "env", ft_strlen("env")) == 0)
+// 		ft_env(input);
+// 	else if (ft_strncmp(input[0], "export", ft_strlen("export")) == 0)
+// 		ft_export(input);
+// 	else if (ft_strncmp(input[0], "unset", ft_strlen("unset")) == 0)
+// 		ft_unset(input);
+// 	else if (ft_strncmp(input[0], "exit", ft_strlen(str)) == 0)
+// 		ft_exit(input);
+// }
+
+void	ft_execute_commands(t_parse *parse, t_file *file, t_fd **fd, int flag)
+{
+	if (file == NULL)
+	{
+		ft_execve_or_builtin(parse->args);
+		if (flag == 0)
+			ft_return_fd();
+		else
+			dup2(parse->in_file, STDIN_FILENO);
 		return ;
-	command_path = ft_find_command_path(str);
-	if (command_path == NULL)
+	}
+	while (file != NULL)
 	{
-		printf("%s: command not found\n", str);
-		printf("hata buradan kaynaklı\n");
+		if (file->type == GREATER)
+			; // redirect in
+		else if (file->type == SMALLER)
+			; // redirect out
+		else if (file->type == APPEND)
+			; // append
+		else if (file->type == HERE_DOC)
+			ft_heredoc(parse, &file, fd);
+		if (file == NULL && parse->next == NULL)
+			ft_return_fd();
+	}
+}
+
+void	ft_execve_or_builtin(char **str)
+{
+	pid_t	pid;
+	int		type;
+
+	type = ft_builtin_or_not(str[0]);
+	if (g_minishell.token_num == 1 && type != 0)
+	{
+		ft_execute_builtins(str);
 		return ;
 	}
-	argc = 0;
-	while (temp)
-	{
-		argc++;
-		temp = temp->next;
-	}
-	argv = malloc((argc + 1) *  sizeof(char *));
-	i = 0;
-	temp = mini->nodes_t;
-	while (i < argc && temp != NULL)
-	{
-		argv[i] = (char *)temp->content;
-		temp = temp->next;
-		i++;
-	}
-	argv[argc] = NULL; // last char shoudl be null
-	// Create a child process
+	// signal();
 	pid = fork();
-	// Check error
-	if (pid < 0)
-		perror("Fork failed");
-	else if (pid == 0)
+	if (pid == 0)
 	{
-		if (execve(command_path, argv, NULL) == -1)
-		{
-			perror("execve failed");
-			exit(EXIT_FAILURE);
-		}
+		ft_execute_builtins(str);
+		exit(0);
+	}
+	return ;
+}
+
+void	ft_command(t_parse **parse, t_fd **fd)
+{
+	int		type; // sinyal kısmıyla alakalı
+	int		flag;
+
+	type = ft_builtin_or_not(parse[0]->args[0]); // bu kısımda sinyallerle ilgili //
+	flag = 0;
+	if (parse[1] != NULL)
+	{
+		flag = 1;
+		ft_handle_pipe(parse, fd, flag);
 	}
 	else
-		wait(NULL); // Parent waits the child
-	free(argv);
+		ft_execute_commands(parse[0], parse[0]->file, fd, flag);
+	// handle signals later //
+	while (waitpid(0, &g_minishell.exit_status, 0) > 0)
+		continue;
+	if (type == 0)
+	{
+		if (ft_is_exited(g_minishell.exit_status))
+			g_minishell.exit_status = ft_get_exit_status(g_minishell.exit_status);
+		else
+			g_minishell.exit_status = 130;
+	}
+	signal(SIGQUIT, SIG_IGN);
 }
 
-void	ft_builtin_commands(t_minishell *mini)
+void	ft_dup_fd(t_parse *parse)
 {
-	char	*str;
-	char	**input;
+	if (parse->args[0])
+	{
+		parse->in_file = dup(g_minishell.in);
+		parse->out_file = dup(g_minishell.in);
+	}
+	g_minishell.in = dup(STDIN_FILENO);
+	g_minishell.in2 = dup(STDIN_FILENO);
+	g_minishell.out = dup(STDOUT_FILENO);
+	g_minishell.out2 = dup(STDOUT_FILENO);
+}
 
-	input = ft_get_char(mini);
+void	ft_execution(t_minishell *mini)
+{
+	t_parse	**parse;
+	t_fd	*fd;
+	char	*str;
+
+	parse = &mini->nodes_p;
 	str = (char *)mini->nodes_t->content;
-	if (ft_strncmp(str, "pwd", ft_strlen(str)) == 0)
-		ft_pwd(str);
-	else if (ft_strncmp(str, "echo", ft_strlen(str)) == 0)
-		ft_echo(input);
-	else if (ft_strncmp(str, "cd", ft_strlen("cd")) == 0)
-		ft_cd(mini);
-	else if (ft_strncmp(str, "env", ft_strlen("env")) == 0)
-		ft_env(input);
-	else if (ft_strncmp(str, "export", ft_strlen("export")) == 0)
-		ft_export(input);
-	else if (ft_strncmp(str, "unset", ft_strlen("unset")) == 0)
-		ft_unset(input);
-	else if (ft_strncmp(str, "exit", ft_strlen(str)) == 0)
-		ft_exit(mini);
-}
-
-void	ft_command(t_minishell *mini)
-{
-	t_list	*temp;
-	char	*str;
-
-	temp = mini->nodes_t;
-	str = (char *)temp->content;
-	if (temp == NULL || str == NULL)
+	if (mini->nodes_t == NULL || str == NULL)
 		return ;
-	if (ft_strncmp(str, "ls", ft_strlen(str)) == 0)
-		ft_execute_commands(mini);
-	else
-		ft_builtin_commands(mini);
+	ft_dup_fd(parse[0]);
+	ft_command(parse, &fd);
 }

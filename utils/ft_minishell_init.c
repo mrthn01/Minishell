@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_minishell_init.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: murathanelcuman <murathanelcuman@studen    +#+  +:+       +#+        */
+/*   By: melcuman <melcuman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 23:06:40 by murathanelc       #+#    #+#             */
-/*   Updated: 2024/09/19 23:10:18 by murathanelc      ###   ########.fr       */
+/*   Updated: 2024/09/23 14:29:30 by melcuman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-extern t_state	g_state;
+extern t_minishell	g_minishell;
 
 // store environment variable and later access through global variable
 char	**ft_store_envp(char **envp)
@@ -39,5 +39,9 @@ char	**ft_store_envp(char **envp)
 // init minishell states
 void	ft_init(char **envp)
 {
-	g_state.envp = ft_store_envp(envp);
+	g_minishell.envp = ft_store_envp(envp);
+	g_minishell.exit_status = 0;
+	g_minishell.nodes_p = NULL; // parsing
+	g_minishell.fd = NULL;
+	g_minishell.error = 0;
 }

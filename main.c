@@ -6,14 +6,14 @@
 /*   By: murathanelcuman <murathanelcuman@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 12:27:07 by sebasari          #+#    #+#             */
-/*   Updated: 2024/09/19 23:07:45 by murathanelc      ###   ########.fr       */
+/*   Updated: 2024/09/25 00:03:12 by murathanelc      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 // global değişken
-t_state	g_state;
+t_minishell	g_minishell;
 
 int	check_if_empty(char *str)
 {

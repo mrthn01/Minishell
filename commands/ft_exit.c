@@ -3,23 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: murathanelcuman <murathanelcuman@studen    +#+  +:+       +#+        */
+/*   By: melcuman <melcuman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 22:57:32 by murathanelc       #+#    #+#             */
-/*   Updated: 2024/09/19 23:26:58 by murathanelc      ###   ########.fr       */
+/*   Updated: 2024/09/23 14:49:35 by melcuman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 // exit command
-void	ft_exit(t_minishell *mini)
+void	ft_exit(char **str)
 {
-	t_list	*temp;
 	int		total_len;
 	
-	temp = mini->nodes_t;
-	total_len = ft_lstsize(temp);
+	total_len = ft_strlen_adjusted(str);
 	if (total_len <= 3)
 		exit(EXIT_SUCCESS);
 	else

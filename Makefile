@@ -9,12 +9,15 @@ SRC = 	./parsing/tokenization.c \
 		./parsing/token_special_1.c \
 		./parsing/parse.c \
 		./parsing/syntax_controll.c \
+		./parsing/ft_expand_envp.c \
 		./utils/single_quotes.c \
-		./utils/util.c \
+		./utils/util_1.c \
 		./utils/util_2.c \
 		./utils/util_3.c \
+		./utils/util_5.c \
 		./utils/double_quotes.c \
 		./utils/ft_minishell_init.c \
+		./utils/ft_exit_bits.c \
 		./commands/ft_cd.c \
 		./commands/ft_echo.c \
 		./commands/ft_env.c \
@@ -23,8 +26,14 @@ SRC = 	./parsing/tokenization.c \
 		./commands/ft_pwd.c \
 		./commands/ft_unset.c \
 		./execution/ft_execute.c \
+		./execution/ft_builtins.c \
+		./execution/ft_execution.c \
+		./execution/ft_heredoc.c \
+		./execution/ft_heredoc_utils.c \
+		./execution/ft_pipe.c \
 		./init.c \
 		./main.c
+#		./utils/util_4.c #
 
 OBJS = $(SRC:.c=.o)
 

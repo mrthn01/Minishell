@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sebasari <sebasari@student.42.fr>          +#+  +:+       +#+        */
+/*   By: murathanelcuman <murathanelcuman@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 15:46:22 by sebasari          #+#    #+#             */
-/*   Updated: 2024/09/19 16:01:44 by sebasari         ###   ########.fr       */
+/*   Updated: 2024/09/25 00:25:00 by murathanelc      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,29 +76,24 @@ void	adjust_redirecs(t_list **token, t_parse **current)
 	(*token) = (*token)->next;
 }
 
-t_parse	**handle_pipes(t_list **token, t_parse **old_current, t_parse **list)
+void	handle_pipes(t_list **token, t_parse **old_current)
 {
 	t_parse *new_current;
 
 	new_current = init_cmd((*old_current)->in_file, (*old_current)->out_file);
 	(*old_current)->next = new_current;
 	(*token) = (*token)->next;
-	add_new_node(new_current, list);
-	return (list);
 }
 
 t_minishell	*parse(int in_file, int out_file, t_minishell *mini)
 {
 	t_parse	*current;
-	t_parse	**list;
 	t_list	*token;
 
 	token = mini->nodes_t;
-	list = ft_calloc(mini->token_num + 1, sizeof(t_parse *));
 	while (token != NULL)
 	{
 		current = init_cmd(in_file, out_file);
-		add_new_node(current, list);
 		while (token != NULL)
 		{
 			if ((token->type >= 1 && token->type<= 4) && token->next)
@@ -106,11 +101,40 @@ t_minishell	*parse(int in_file, int out_file, t_minishell *mini)
 			else if(token->type == STRING)
 				add_arguments(&token, &current);
 			else if (token->type == PIPE && token->next)
-				list = handle_pipes(&token, &current, list);
+				handle_pipes(&token, &current);
 			else
 				token = token->next;
 		}
 	}
-	mini->nodes_p = list;
+	mini->nodes_p = current;
+	mini = create_out_dup_list(mini);
+	return (mini);
+}
+
+t_minishell	*create_out_dup_list(t_minishell *mini)
+{
+	t_fd		*fd;
+	t_parse		*temp;
+	t_file		*file;
+
+	fd = (t_fd *)malloc(sizeof(t_fd));
+	g_minishell.fd = fd;
+	temp = mini->nodes_p;
+	while (temp != NULL)
+	{
+		file = temp->file;
+		while (file)
+		{
+			fd->out = dup(STDOUT_FILENO);
+			fd->in = dup(STDIN_FILENO);
+			if (file->next || temp->next != NULL)
+				fd->next = (t_fd *)malloc(sizeof(t_fd));
+			else
+				fd->next = NULL;
+			fd = fd->next;
+			file = file->next;
+		}
+		temp = temp->next;
+	}
 	return (mini);
 }

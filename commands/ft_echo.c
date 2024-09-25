@@ -6,7 +6,7 @@
 /*   By: murathanelcuman <murathanelcuman@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 22:55:33 by murathanelc       #+#    #+#             */
-/*   Updated: 2024/09/20 00:04:25 by murathanelc      ###   ########.fr       */
+/*   Updated: 2024/09/21 14:28:32 by murathanelc      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,22 @@ int	ft_check_option(char *str)
 	return (0);
 }
 
+void	ft_print(char **str, int i, int flag)
+{
+	int	j;
+
+	j = i;
+	while (str[j])
+	{
+		printf("%s", str[j]);
+		if (str[j + 1])
+			printf(" ");
+		j++;
+	}
+	if (flag == 0 || str[i] == NULL)
+		printf("\n");
+}
+
 // echo command
 void	ft_echo(char **str)
 {
@@ -55,18 +71,10 @@ void	ft_echo(char **str)
 			i++;
 		else
 		{
-			flag = ft_check_option(str[i]); // check 1st index whether contain -n flag
+			flag = ft_check_option(str[i]);
 			if (flag == 1)
 				i++;
 		}
 	}
-	while (str[i])
-	{
-		printf("%s", str[i]);
-		if (str[i + 1])
-			printf(" ");
-		i++;
-	}
-	if (flag == 0 || str[1] == NULL)
-		printf("\n");
+	ft_print(str, i, flag);
 }
